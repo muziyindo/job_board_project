@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section id="content">
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-md-9 col-md-offset-2">
+
+<p>
+	<!--{% if error %}
+		{% for x in error %}
+			<span style="color:red">{{x}}, </span>
+		{% endfor %}
+	{% endif %}-->
+
+</p>
+<fieldset>
+<label>Have an account?</label>
+<div class="field account-sign-in">
+<p>
+<a class="btn btn-common btn-sm" href="my-account.html"><i class="ti-key"></i> Sign in</a>
+</p>
+
+{% if message %}
+	<div class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
+	Job successfully posted. 
+	</div>
+{% endif %}
+
+
+<div class="alert alert-info alert-dismissable">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
+If you don’t have an account you can post job as a guest employer.
+</div>
+</div>
+</fieldset>
+
+<div class="page-ads box">
+	<!--<form class="form-ad" method="post" action="{% url 'post_job' %}">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" class="btn btn-common" value="Submit your job"></input>
+	</form>-->
+<form class="form-ad" method="post" action="{% url 'post_job' %}">
+{% csrf_token %}
+<div class="form-group">
+<label class="control-label">Your Email</label>
+<!-- <input type="text" class="form-control" placeholder="mail@example.com" name="employer_email" > -->
+{{form.employer_email}}
+<span style="color:red">{{form.employer_email.errors}}</span>
+</div>
+<div class="form-group">
+<label class="control-label">Job Title</label>
+<!-- <input type="text" class="form-control" name="title" > -->
+{{form.title}}
+<span style="color:red">{{ form.title.errors }}</span>
+</div>
+<div class="form-group">
+<label class="control-label">Location <span>(optional)</span></label>
+<!-- <input type="text" class="form-control" placeholder="e.g.Lagos" name="location" > -->
+{{form.location}}
+<span style="color:red">{{form.location.errors}}</span>
+</div>
+
+<div class="form-group">
+<label class="control-label">Category</label>
+<div class="search-category-container">
+<label class="styled-select">
+<!-- <select class="dropdown-product selectpicker" name="category" >
+<option value="">-select--</option>
+<option value="Finance">Finance</option>
+<option value="IT & Engineering">IT & Engineering</option>
+<option value="Education/Training">Education/Training</option>
+<option value="Art/Design">Art/Design</option>
+<option value="Sale/Marketing">Sale/Marketing</option>
+<option value="Healthcare">Healthcare</option>
+<option value="Science">Science</option>
+<option value="Food Services">Food Services</option>
+</select> -->
+{{form.category}}
+<span style="color:red">{{form.category.errors}}</span>
+</label>
+</div>
+</div>
+
+<div class="form-group">
+<label class="control-label">Job Type</label>
+<div class="search-category-container">
+<label class="styled-select">
+<!-- <select class="dropdown-product selectpicker" name="job_type" >
+<option value="">--select--</option>
+<option value="Full Time">Full Time</option>
+<option value="Part Time">Part Time</option>
+</select> -->
+{{form.job_type}}
+<span style="color:red">{{form.job_type.errors}}</span>
+</label>
+</div>
+</div>
+
+
+
+<div class="form-group">
+<label class="control-label" for="textarea">Job Description</label>
+<!-- <input type="text" class="form-control" placeholder="e.g.PHP,Social Media,Management" name="description" > -->
+{{form.description}}
+<span style="color:red">{{form.description.errors}}</span>
+<p class="note">Comma separate tags, such as  skills or technologies, for this job.</p>
+</div>
+
+<section id="editor">
+<div id="summernote"><p>Enter email if application is by sending resume to an email. Enter website url if application is on company website</p></div>
+</section>
+<div class="form-group">
+<label class="control-label">Application email / URL</label>
+<!-- <input type="text" class="form-control" placeholder="Enter an email address or website URL" name="application_email_website" > -->
+{{form.application_email_website}}
+<span style="color:red">{{form.application_email_website.errors}}</span>
+</div>
+<div class="form-group">
+<label class="control-label">Closing Date <span>(optional)</span></label>
+<!-- <input type="text" class="form-control" placeholder="yyyy-mm-dd" name="closing_Date" > -->
+{{form.closing_Date}}
+<span style="color:red">{{form.closing_Date.errors}}</span>
+<p class="note">Deadline for new applicants.</p>
+</div>
+<div class="divider"><h3>Company Details</h3></div>
+<div class="form-group">
+<label class="control-label">Company Name</label>
+<!-- <input type="text" class="form-control" placeholder="Enter the name of the company" name="company_name" > -->
+{{form.company_name}}
+<span style="color:red">{{form.company_name.errors}}</span>
+</div>
+<div class="form-group">
+<label class="control-label">Website <span>(optional)</span></label>
+<!-- <input type="text" class="form-control" placeholder="http://" name="company_website"> -->
+{{form.company_website}}
+<span style="color:red">{{form.company_website.errors}}</span>
+</div>
+
+
+<input type="submit" class="btn btn-common" value="Submit your job"></input>
+</form>
+
+
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{% endblock %}
