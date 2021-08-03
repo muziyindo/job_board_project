@@ -5,6 +5,12 @@
 {% block content %}
 
 
+<!--<form method="POST" action="{% url 'signin' %}">
+     {% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="Login">
+
+</form>-->
 <div id="content" class="my-account">
 
 
@@ -13,16 +19,16 @@
 		<div class="row">
 		<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-6 cd-user-modal">
 		<fieldset>
-			<label>Have an account?</label>
+			<label>Don't have an account?</label>
 			<div class="field account-sign-in">
 			<p>
-			<a class="btn btn-common btn-sm" href="{% url 'signin' %}"><i class="ti-key"></i> Signin</a>
+			<a class="btn btn-common btn-sm" href="{% url 'register' %}"><i class="ti-key"></i> Register</a>
 			</p>
 			</div>
 		</fieldset>
 		<div class="my-account-form">
 		<ul class="cd-switcher">
-		<li><a href="#0">REGISTER AN ACCOUNT</a></li>
+		<li><a href="#0">LOGIN TO YOUR ACCOUNT</a></li>
 		<li><a href="#0"></a></li>
 		<!--<li><a href="#0">REGITER</a></li>-->
 		</ul>
@@ -33,70 +39,25 @@
 		{% if error %}
 			<span style="color:red">{{error}}</span>
 		{% endif %}
-
-		{% if form.errors %}
-			<span style="color:red">{{form.non_field_errors}}</span>
-		{% endif %}
-
-
-		<form role="form" class="login-form" method="post" action= "{% url 'register' %}">
+		<form role="form" class="login-form" method="post" action= "{% url 'signin' %}">
 		{% csrf_token %}
 		<div class="form-group">
-		<span style="color:red">{{form.firstname.errors}}</span>
-		<div class="input-icon">
-		<i class="ti-user"></i>
-		<!-- <input type="text" id="sender-email" class="form-control" name="email" placeholder="Username"> -->
-		{{form.firstname}}
-		</div>
-		</div>
-
-		<div class="form-group">
-		<span style="color:red">{{form.lastname.errors}}</span>
-		<div class="input-icon">
-		<i class="ti-user"></i>
-		<!-- <input type="text" id="sender-email" class="form-control" name="email" placeholder="Username"> -->
-		{{form.lastname}}
-		</div>
-		</div>
-
-		<div class="form-group">
-		<span style="color:red">{{form.email.errors}}</span>
+		<span style="color:red">{{form.username.errors}}</span>
 		<div class="input-icon">
 		<i class="ti-email"></i>
 		<!-- <input type="text" id="sender-email" class="form-control" name="email" placeholder="Username"> -->
-		{{form.email}}
+		{{form.username}}
 		</div>
 		</div>
-
 		<div class="form-group">
 		<span style="color:red">{{form.password.errors}}</span>
 		<div class="input-icon">
 		<i class="ti-lock"></i>
-		{{form.password1}}
+		{{form.password}}
 		<!-- <input type="password" class="form-control" placeholder="Password"> -->
 		</div>
 		</div>
-
-		<div class="form-group">
-		<span style="color:red">{{form.password.errors}}</span>
-		<div class="input-icon">
-		<i class="ti-lock"></i>
-		{{form.password2}}
-		<!-- <input type="password" class="form-control" placeholder="Password"> -->
-		</div>
-		</div>
-
-		<div class="form-group">
-		<span style="color:red">{{form.user_type.errors}}</span>
-		<div class="input-icon">
-		
-		{{form.user_type}}
-		<!-- <input type="password" class="form-control" placeholder="Password"> -->
-		</div>
-		</div>
-
-
-		<button class="btn btn-common log-btn" type="submit">Register</button>
+		<button class="btn btn-common log-btn" type="submit">Login</button>
 		<div class="checkbox-item">
 		<div class="checkbox">
 		<label for="rememberme" class="rememberme">

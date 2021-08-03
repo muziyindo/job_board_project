@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 #import re # for email validation
 from .models import Job
 from .forms import JobPostForm #imported this for the post job form
@@ -13,6 +14,7 @@ def home(request):
 def jobs(request):
 	return HttpResponse('Jobs')
 
+@login_required(login_url="signin")
 def post_job(request):
 	
 	if request.method == 'POST':

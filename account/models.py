@@ -3,6 +3,10 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 # Create your models here.
@@ -73,3 +77,29 @@ class MyUser(AbstractBaseUser):
     # Must include this function too
     def has_module_perms(self, add_label):
         return True
+
+class Profile(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    user_type  = models.CharField(max_length=5)
+    phone_number = models.CharField(blank=True, max_length=15)
+    company = models.CharField(blank = True, max_length=100)
+    company_description = models.TextField(blank = True)
+    company_address = models.TextField(blank = True)
+
+    def __str__(self):
+        return self.user.firstname
+
+@receiver(post_save, sender=MyUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=MyUser)
+def save_user_profile(sender, instance, **kwargs):
+    try:
+        instance.profile.save()
+    except ObjectDoesNotExist :
+        Profile.objects.create(user = instance)
+
+
+

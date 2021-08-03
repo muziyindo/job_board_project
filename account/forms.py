@@ -8,11 +8,16 @@ from django.contrib.auth import get_user_model
 
 # my_user = MyUser()
 
+USER_TYPE = [
+    ('1', 'I am an employer'),
+    ('2', 'I am a job seeker'),
+]
+
 
 class RegisterForm(forms.Form):
-    firstname = forms.CharField(max_length=50)
-    lastname = forms.CharField(max_length=50)
-    email = forms.EmailField()
+    firstname = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Firstname'}))
+    lastname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Lastname'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(
@@ -29,6 +34,8 @@ class RegisterForm(forms.Form):
             }
         )
     )
+
+    user_type = forms.ChoiceField(widget=forms.RadioSelect(attrs={}), choices=USER_TYPE)
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
@@ -52,30 +59,33 @@ class RegisterForm(forms.Form):
         if password1 != password2:
             raise forms.ValidationError("Passwords do not match")
 
-# class LoginForm(forms.Form):
-#     username = forms.CharField(widget=forms.TextInput(
-#         attrs={
-#             "class": "form-control"
-#         }))
-#     password = forms.CharField(
-#         widget=forms.PasswordInput(
-#             attrs={
-#                 "class": "form-control",
-#                 "id": "user-password"
-#             }
-#         )
-#     )
+class LoginForm(forms.Form):
+    username = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            "class": "form-control",
+            "id": "sender-email",
+            "placeholder": "Email"
+        }))
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "user-password",
+                "placeholder": "Password"
+            }
+        )
+    )
 
-# def clean(self):
-#     data = super().clean()
-#     username = data.get("username")
-#     password = data.get("password")
+    def clean(self):
+        data = super().clean()
+        username = data.get("username")
+        password = data.get("password")
 
-# def clean_username(self):
-#     username = self.cleaned_data.get("username")
-#     qs = User.objects.filter(username__iexact=username)  # thisIsMyUsername == thisismyusername
-#     if not qs.exists():
-#         raise forms.ValidationError("This is an invalid user.")
-#     if qs.count() != 1:
-#         raise forms.ValidationError("This is an invalid user.")
-#     return username
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        qs = MyUser.objects.filter(username__iexact=username)  # thisIsMyUsername == thisismyusername
+        if not qs.exists():
+            raise forms.ValidationError("This is an invalid user.")
+        # if qs.count() != 1:
+        #     raise forms.ValidationError("This is an invalid user.")
+        return username

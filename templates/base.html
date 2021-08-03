@@ -112,9 +112,10 @@
                   <li class="left"><a href="{% url 'post_job' %}"><i class="ti-pencil-alt"></i> Post A Job</a></li>
 
                   {% if user.is_authenticated %}
-                  <li class="right"><a href="my-account.html"><i class="ti-lock"></i>  Log Out</a></li>
+                  <li class="right"><a href="{% url 'signout' %}"><i class="ti-lock"></i>  Log Out</a></li>
+                  <li class="right"><a href="#"><i class="ti-user"></i>  {{ user.get_fullname }}</a></li>
                   {% else %}
-                  <li class="right"><a href="my-account.html"><i class="ti-lock"></i>  Log In</a></li>
+                  <li class="right"><a href="{% url 'signin' %}"><i class="ti-lock"></i>  Log In</a></li>
                   {% endif %}
                 </ul>
               </div>
