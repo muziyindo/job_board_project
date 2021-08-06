@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '(+6_-z(!5e5rjk*55np%o=om0jy(wgugq7&lb_^u_fc2gxa9f9'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'job',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -72,23 +70,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'job_board.wsgi.application'
 
-AUTH_USER_MODEL = 'account.MyUser' #tell django to replace the default user model with MyUser model
-
+AUTH_USER_MODEL = 'account.MyUser'  # tell django to replace the default user model with MyUser model
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql', #added db engine name
-        'NAME': 'job_board',
-        'USER': 'postgres',
-        'PASSWORD': '52089900m',
+        'ENGINE': 'django.db.backends.postgresql',  # added db engine name
+        'NAME': 'job_board_new',
+        'USER': 'dayo',
+        'PASSWORD': 'solomon8080',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -108,6 +104,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'musdaypro@gmail.com'
+EMAIL_HOST_PASSWORD = 'Password10$'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -122,17 +124,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-STATIC_URL = '/static/' #specify url to access static files directly from the browser
-STATIC_ROOT = BASE_DIR /'static' #specify where django should put collected static files
+STATIC_URL = '/static/'  # specify url to access static files directly from the browser
+STATIC_ROOT = BASE_DIR / 'static'  # specify where django should put collected static files
 STATICFILES_DIRS = [
-    'job_board/static', #specify where you put your static files
+    'job_board/static',  # specify where you put your static files
 ]
 
-MEDIA_URL = '/media/' #specify url to access media files directly from the browser
-MEDIA_ROOT = BASE_DIR /'media' #specify where django should put media files
-
+MEDIA_URL = '/media/'  # specify url to access media files directly from the browser
+MEDIA_ROOT = BASE_DIR / 'media'  # specify where django should put media files

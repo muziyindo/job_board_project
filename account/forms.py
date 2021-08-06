@@ -2,7 +2,6 @@ from django import forms
 from .models import MyUser
 from django.contrib.auth import get_user_model
 
-
 # non_allowed_usernames = ['abc']
 # check for unique email & username
 
@@ -15,9 +14,11 @@ USER_TYPE = [
 
 
 class RegisterForm(forms.Form):
-    firstname = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Firstname'}))
-    lastname = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Lastname'}))
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
+    firstname = forms.CharField(max_length=50,
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Firstname'}))
+    lastname = forms.CharField(max_length=50,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Lastname'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(
@@ -59,6 +60,7 @@ class RegisterForm(forms.Form):
         if password1 != password2:
             raise forms.ValidationError("Passwords do not match")
 
+
 class LoginForm(forms.Form):
     username = forms.EmailField(widget=forms.TextInput(
         attrs={
@@ -80,6 +82,28 @@ class LoginForm(forms.Form):
         data = super().clean()
         username = data.get("username")
         password = data.get("password")
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        qs = MyUser.objects.filter(username__iexact=username)  # thisIsMyUsername == thisismyusername
+        if not qs.exists():
+            raise forms.ValidationError("This is an invalid user.")
+        # if qs.count() != 1:
+        #     raise forms.ValidationError("This is an invalid user.")
+        return username
+
+
+class ResetPasswordForm(forms.Form):
+    username = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            "class": "form-control",
+            "id": "sender-email",
+            "placeholder": "Email"
+        }))
+
+    def clean(self):
+        data = super().clean()
+        username = data.get("username")
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
